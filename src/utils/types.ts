@@ -1,5 +1,4 @@
 export interface IPainting {
-  primaryImageSmall: string,
-  objectEndDate: number 
+  primaryImageSmall: string;
+  objectEndDate: number;
 }
-
