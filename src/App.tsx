@@ -105,7 +105,6 @@ function App(): JSX.Element {
         <>
           <h1>Welcome to Newer or Older!</h1>
           <button onClick={handleStart}>Start Game</button>
-          
         </>
       )}
 
