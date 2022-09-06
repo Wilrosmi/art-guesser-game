@@ -19,7 +19,7 @@ function App(): JSX.Element {
   const [paintings, setPaintings] =
     useState<[IPainting, IPainting]>(placeholderPaintings);
   const [score, setScore] = useState<number>(0);
-  const [lost, setLost] = useState<0 | 1>(0);
+  const [page, setPage] = useState<0 | 1 | 2>(2);
 
   useEffect(() => {
     const getIds = async (): Promise<void> => {
@@ -41,23 +41,27 @@ function App(): JSX.Element {
     if (artIds.length !== 0) {
       getPainting();
     }
-  }, [artIds, lost]);
+  }, [artIds, page]);
 
   useEffect(() => {
     const paintingsCopy: [IPainting, IPainting] = [...paintings];
+    let hasAPaintingChanged = false;
     const emptyImageChecker = async (): Promise<void> => {
       for (let i = 0; i <= 1; i++) {
         if (paintings[i].primaryImageSmall === "") {
           const newPainting = await getAPainting(getRandomObjectId(artIds));
           paintingsCopy[i] = newPainting;
+          hasAPaintingChanged = true;
         }
       }
-      setPaintings(paintingsCopy);
+      if (hasAPaintingChanged) {
+        setPaintings(paintingsCopy);
+      }
     };
     if (artIds.length !== 0) {
       emptyImageChecker();
     }
-  }, [...paintings]);
+  }, [paintings, artIds]);
 
   async function handleButtonChoice(pick: "older" | "newer"): Promise<void> {
     const correctAnswer =
@@ -70,28 +74,49 @@ function App(): JSX.Element {
       setPaintings(newPaintings);
       setScore((sc) => sc + 1);
     } else {
-      setLost(1);
+      setPage(1);
     }
   }
 
   function playAgain(): void {
     setScore(0);
-    setLost(0);
+    setPage(0);
   }
 
-  console.log(paintings[0].objectEndDate, paintings[1].objectEndDate);
+  function handleStart(): void {
+    setPage(0);
+  }
 
-  return lost === 0 ? (
+  return (
     <div>
-      <img src={paintings[0].primaryImageSmall} alt="Painting One" />
-      <img src={paintings[1].primaryImageSmall} alt="Painting Two" />
-      <p>Is the second piece of art older or newer than the first?</p>
-      <button onClick={() => handleButtonChoice("older")}>older</button>
-      <button onClick={() => handleButtonChoice("newer")}>newer</button>
-      <p>{score}</p>
+      {page === 0 && (
+        <>
+          <h1>Newer or Older?</h1>
+          <img src={paintings[0].primaryImageSmall} alt="Painting One" />
+          <img src={paintings[1].primaryImageSmall} alt="Painting Two" />
+          <p>Is the second piece of art older or newer than the first?</p>
+          <button onClick={() => handleButtonChoice("older")}>older</button>
+          <button onClick={() => handleButtonChoice("newer")}>newer</button>
+          <p>{score}</p>
+        </>
+      )}
+
+      {page === 2 && (
+        <>
+          <h1>Welcome to Newer or Older!</h1>
+          <button onClick={handleStart}>Start Game</button>
+          
+        </>
+      )}
+
+      {page === 1 && (
+        <>
+          <h1>Newer or Older?</h1>
+          <p>You got {score} correct</p>
+          <button onClick={playAgain}>Play Again</button>
+        </>
+      )}
     </div>
-  ) : (
-    <button onClick={playAgain}>Play Again</button>
   );
 }
 
