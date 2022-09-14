@@ -31,17 +31,20 @@
   place-self: center;
 }
 
-.home-title, .loss-title {
+.home-title,
+.loss-title {
   text-align: center;
   margin: 25vh auto auto auto;
-} 
+}
 
-.home-subtitle, .loss-score {
+.home-subtitle,
+.loss-score {
   text-align: center;
   margin: 5vh auto auto auto;
 }
 
-.home-btn, .loss-btn {
+.home-btn,
+.loss-btn {
   display: block;
   margin: 10vh auto auto auto;
 }
@@ -54,6 +57,7 @@ footer {
 .prompt-grid {
   display: grid;
   grid-template-areas: "a b" "c d";
+  grid-template-columns: 1fr 1fr;
   width: 100%;
 }
 
@@ -72,4 +76,4 @@ footer {
 .right-prompt-btns {
   grid-area: d;
   place-self: center;
-} 
+}

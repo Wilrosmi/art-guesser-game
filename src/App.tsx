@@ -7,12 +7,12 @@ const placeholderPaintings: [IPainting, IPainting] = [
   {
     primaryImageSmall: "",
     objectEndDate: 0,
-    title: ""
+    title: "",
   },
   {
     primaryImageSmall: "",
     objectEndDate: 0,
-    title: ""
+    title: "",
   },
 ];
 
@@ -28,7 +28,7 @@ function App(): JSX.Element {
     if (score > highScore) {
       setHighScore(score);
     }
-  }, [score])
+  }, [score, highScore]);
 
   useEffect(() => {
     const getIds = async (): Promise<void> => {
@@ -106,15 +106,37 @@ function App(): JSX.Element {
             <p className="high-score">high score: {highScore}</p>
           </div>
           <div className="paintings">
-            <img className="left painting" src={paintings[0].primaryImageSmall} alt="Painting One" />
-            <img className="right painting" src={paintings[1].primaryImageSmall} alt="Painting Two" />
+            <img
+              className="left painting"
+              src={paintings[0].primaryImageSmall}
+              alt="Painting One"
+            />
+            <img
+              className="right painting"
+              src={paintings[1].primaryImageSmall}
+              alt="Painting Two"
+            />
           </div>
           <div className="prompt-grid">
-            <p className="left-prompt">"{paintings[0].title}" was made in {paintings[0].objectEndDate}</p>
-            <p className="right-prompt" >"{paintings[1].title}" is</p>
-            <p className="right-prompt-btns"><button className="older-btn" onClick={() => handleButtonChoice("older")}>older?</button>
-            {" "}or{" "}
-            <button className="newer-btn" onClick={() => handleButtonChoice("newer")}>newer?</button></p>
+            <p className="left-prompt">
+              "{paintings[0].title}" was made in {paintings[0].objectEndDate}
+            </p>
+            <p className="right-prompt">"{paintings[1].title}" is</p>
+            <p className="right-prompt-btns">
+              <button
+                className="older-btn"
+                onClick={() => handleButtonChoice("older")}
+              >
+                older?
+              </button>{" "}
+              or{" "}
+              <button
+                className="newer-btn"
+                onClick={() => handleButtonChoice("newer")}
+              >
+                newer?
+              </button>
+            </p>
           </div>
         </>
       )}
@@ -122,8 +144,12 @@ function App(): JSX.Element {
       {page === 2 && (
         <>
           <h1 className="home-title">Newer or Older!</h1>
-          <p className="home-subtitle">Try to figure out which artifact of two was created first</p>
-          <button className="home-btn" onClick={handleStart}>Start Game</button>
+          <p className="home-subtitle">
+            Try to figure out which artifact of two was created first
+          </p>
+          <button className="home-btn" onClick={handleStart}>
+            Start Game
+          </button>
         </>
       )}
 
@@ -131,7 +157,9 @@ function App(): JSX.Element {
         <>
           <h1 className="loss-title">Newer or Older?</h1>
           <h3 className="loss-score">You got {score} correct</h3>
-          <button className="loss-btn" onClick={playAgain}>Play Again</button>
+          <button className="loss-btn" onClick={playAgain}>
+            Play Again
+          </button>
         </>
       )}
     </div>
