@@ -52,26 +52,6 @@ function App(): JSX.Element {
     }
   }, [artIds, page]);
 
-  // useEffect(() => {
-  //   const paintingsCopy: [IPainting, IPainting] = [...paintings];
-  //   let hasAPaintingChanged = false;
-  //   const emptyImageChecker = async (): Promise<void> => {
-  //     for (let i = 0; i <= 1; i++) {
-  //       if (paintings[i].primaryImageSmall === "") {
-  //         const newPainting = await getAPainting();
-  //         paintingsCopy[i] = newPainting;
-  //         hasAPaintingChanged = true;
-  //       }
-  //     }
-  //     if (hasAPaintingChanged) {
-  //       setPaintings(paintingsCopy);
-  //     }
-  //   };
-  //   if (artIds.length !== 0) {
-  //     emptyImageChecker();
-  //   }
-  // }, [paintings, artIds]);
-
   async function handleButtonChoice(pick: "older" | "newer"): Promise<void> {
     const correctAnswer =
       paintings[0].objectEndDate > paintings[1].objectEndDate
