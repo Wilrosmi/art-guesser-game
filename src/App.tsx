@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { IPainting } from "./utils/types";
 import getAPainting from "./utils/getAPainting";
-import getRandomObjectId from "./utils/getRandomObjectId";
 
 const placeholderPaintings: [IPainting, IPainting] = [
   {
@@ -47,7 +46,7 @@ function App(): JSX.Element {
       const paintingTwo = await getAPainting(artIds);
       setPaintings([paintingOne, paintingTwo]);
     };
-    if (artIds.length !== 0) {
+    if (artIds.length !== 0 && page === 0) {
       getTwoPaintingsWithImages();
     }
   }, [artIds, page]);
