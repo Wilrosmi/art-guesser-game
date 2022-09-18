@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IPainting } from "./utils/types";
 import getAPainting from "./utils/getAPainting";
-import getRandomObjectId from "./utils/getRandomObjectId";
+import formatDate from "./utils/formatDate";
 
 const placeholderPaintings: [IPainting, IPainting] = [
   {
@@ -42,35 +42,15 @@ function App(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    const getPainting = async (): Promise<void> => {
-      const paintingOne = await getAPainting(getRandomObjectId(artIds));
-      const paintingTwo = await getAPainting(getRandomObjectId(artIds));
+    const getTwoPaintingsWithImages = async (): Promise<void> => {
+      const paintingOne = await getAPainting(artIds);
+      const paintingTwo = await getAPainting(artIds);
       setPaintings([paintingOne, paintingTwo]);
     };
-    if (artIds.length !== 0) {
-      getPainting();
+    if (artIds.length !== 0 && page === 0) {
+      getTwoPaintingsWithImages();
     }
   }, [artIds, page]);
-
-  useEffect(() => {
-    const paintingsCopy: [IPainting, IPainting] = [...paintings];
-    let hasAPaintingChanged = false;
-    const emptyImageChecker = async (): Promise<void> => {
-      for (let i = 0; i <= 1; i++) {
-        if (paintings[i].primaryImageSmall === "") {
-          const newPainting = await getAPainting(getRandomObjectId(artIds));
-          paintingsCopy[i] = newPainting;
-          hasAPaintingChanged = true;
-        }
-      }
-      if (hasAPaintingChanged) {
-        setPaintings(paintingsCopy);
-      }
-    };
-    if (artIds.length !== 0) {
-      emptyImageChecker();
-    }
-  }, [paintings, artIds]);
 
   async function handleButtonChoice(pick: "older" | "newer"): Promise<void> {
     const correctAnswer =
@@ -78,7 +58,7 @@ function App(): JSX.Element {
         ? "older"
         : "newer";
     if (pick === correctAnswer) {
-      const newPainting = await getAPainting(getRandomObjectId(artIds));
+      const newPainting = await getAPainting(artIds);
       const newPaintings: [IPainting, IPainting] = [paintings[1], newPainting];
       setPaintings(newPaintings);
       setScore((sc) => sc + 1);
@@ -98,11 +78,11 @@ function App(): JSX.Element {
 
   return (
     <div>
-      {page === 0 && (
+      {page === 0 && paintings[0].primaryImageSmall !== "" && (
         <>
           <div className="top-line">
             <p className="main-score">score: {score}</p>
-            <h1 className="main-title">Newer or Older?</h1>
+            <h1 className="main-title">Older or Newer?</h1>
             <p className="high-score">high score: {highScore}</p>
           </div>
           <div className="paintings">
@@ -119,19 +99,20 @@ function App(): JSX.Element {
           </div>
           <div className="prompt-grid">
             <p className="left-prompt">
-              "{paintings[0].title}" was made in {paintings[0].objectEndDate}
+              "{paintings[0].title}" was made in{" "}
+              {formatDate(paintings[0].objectEndDate)}
             </p>
             <p className="right-prompt">"{paintings[1].title}" is</p>
             <p className="right-prompt-btns">
               <button
-                className="older-btn"
+                className="guess btn"
                 onClick={() => handleButtonChoice("older")}
               >
                 older?
               </button>{" "}
               or{" "}
               <button
-                className="newer-btn"
+                className="guess btn"
                 onClick={() => handleButtonChoice("newer")}
               >
                 newer?
@@ -143,11 +124,11 @@ function App(): JSX.Element {
 
       {page === 2 && (
         <>
-          <h1 className="home-title">Newer or Older!</h1>
+          <h1 className="home-title">Older or Newer?</h1>
           <p className="home-subtitle">
             Try to figure out which artifact of two was created first
           </p>
-          <button className="home-btn" onClick={handleStart}>
+          <button className="start btn" onClick={handleStart}>
             Start Game
           </button>
         </>
@@ -155,9 +136,9 @@ function App(): JSX.Element {
 
       {page === 1 && (
         <>
-          <h1 className="loss-title">Newer or Older?</h1>
+          <h1 className="loss-title">Older or Newer?</h1>
           <h3 className="loss-score">You got {score} correct</h3>
-          <button className="loss-btn" onClick={playAgain}>
+          <button className="replay btn" onClick={playAgain}>
             Play Again
           </button>
         </>
