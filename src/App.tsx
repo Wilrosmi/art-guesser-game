@@ -104,14 +104,14 @@ function App(): JSX.Element {
             <p className="right-prompt">"{paintings[1].title}" is</p>
             <p className="right-prompt-btns">
               <button
-                className="older-btn"
+                className="guess btn"
                 onClick={() => handleButtonChoice("older")}
               >
                 older?
               </button>{" "}
               or{" "}
               <button
-                className="newer-btn"
+                className="guess btn"
                 onClick={() => handleButtonChoice("newer")}
               >
                 newer?
@@ -127,7 +127,7 @@ function App(): JSX.Element {
           <p className="home-subtitle">
             Try to figure out which artifact of two was created first
           </p>
-          <button className="home-btn" onClick={handleStart}>
+          <button className="start btn" onClick={handleStart}>
             Start Game
           </button>
         </>
@@ -137,7 +137,7 @@ function App(): JSX.Element {
         <>
           <h1 className="loss-title">Older or Newer?</h1>
           <h3 className="loss-score">You got {score} correct</h3>
-          <button className="loss-btn" onClick={playAgain}>
+          <button className="replay btn" onClick={playAgain}>
             Play Again
           </button>
         </>
