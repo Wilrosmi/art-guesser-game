@@ -78,7 +78,7 @@ function App(): JSX.Element {
 
   return (
     <div>
-      {page === 0 && (
+      {page === 0 && paintings[0].primaryImageSmall !== "" && (
         <>
           <div className="top-line">
             <p className="main-score">score: {score}</p>
