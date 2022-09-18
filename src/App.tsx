@@ -42,35 +42,35 @@ function App(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    const getPainting = async (): Promise<void> => {
-      const paintingOne = await getAPainting(getRandomObjectId(artIds));
-      const paintingTwo = await getAPainting(getRandomObjectId(artIds));
+    const getTwoPaintingsWithImages = async (): Promise<void> => {
+      const paintingOne = await getAPainting(artIds);
+      const paintingTwo = await getAPainting(artIds);
       setPaintings([paintingOne, paintingTwo]);
     };
     if (artIds.length !== 0) {
-      getPainting();
+      getTwoPaintingsWithImages();
     }
   }, [artIds, page]);
 
-  useEffect(() => {
-    const paintingsCopy: [IPainting, IPainting] = [...paintings];
-    let hasAPaintingChanged = false;
-    const emptyImageChecker = async (): Promise<void> => {
-      for (let i = 0; i <= 1; i++) {
-        if (paintings[i].primaryImageSmall === "") {
-          const newPainting = await getAPainting(getRandomObjectId(artIds));
-          paintingsCopy[i] = newPainting;
-          hasAPaintingChanged = true;
-        }
-      }
-      if (hasAPaintingChanged) {
-        setPaintings(paintingsCopy);
-      }
-    };
-    if (artIds.length !== 0) {
-      emptyImageChecker();
-    }
-  }, [paintings, artIds]);
+  // useEffect(() => {
+  //   const paintingsCopy: [IPainting, IPainting] = [...paintings];
+  //   let hasAPaintingChanged = false;
+  //   const emptyImageChecker = async (): Promise<void> => {
+  //     for (let i = 0; i <= 1; i++) {
+  //       if (paintings[i].primaryImageSmall === "") {
+  //         const newPainting = await getAPainting();
+  //         paintingsCopy[i] = newPainting;
+  //         hasAPaintingChanged = true;
+  //       }
+  //     }
+  //     if (hasAPaintingChanged) {
+  //       setPaintings(paintingsCopy);
+  //     }
+  //   };
+  //   if (artIds.length !== 0) {
+  //     emptyImageChecker();
+  //   }
+  // }, [paintings, artIds]);
 
   async function handleButtonChoice(pick: "older" | "newer"): Promise<void> {
     const correctAnswer =
@@ -78,7 +78,7 @@ function App(): JSX.Element {
         ? "older"
         : "newer";
     if (pick === correctAnswer) {
-      const newPainting = await getAPainting(getRandomObjectId(artIds));
+      const newPainting = await getAPainting(artIds);
       const newPaintings: [IPainting, IPainting] = [paintings[1], newPainting];
       setPaintings(newPaintings);
       setScore((sc) => sc + 1);
@@ -102,7 +102,7 @@ function App(): JSX.Element {
         <>
           <div className="top-line">
             <p className="main-score">score: {score}</p>
-            <h1 className="main-title">Newer or Older?</h1>
+            <h1 className="main-title">Older or Newer?</h1>
             <p className="high-score">high score: {highScore}</p>
           </div>
           <div className="paintings">
@@ -143,7 +143,7 @@ function App(): JSX.Element {
 
       {page === 2 && (
         <>
-          <h1 className="home-title">Newer or Older!</h1>
+          <h1 className="home-title">Older or Newer?</h1>
           <p className="home-subtitle">
             Try to figure out which artifact of two was created first
           </p>
@@ -155,7 +155,7 @@ function App(): JSX.Element {
 
       {page === 1 && (
         <>
-          <h1 className="loss-title">Newer or Older?</h1>
+          <h1 className="loss-title">Older or Newer?</h1>
           <h3 className="loss-score">You got {score} correct</h3>
           <button className="loss-btn" onClick={playAgain}>
             Play Again
