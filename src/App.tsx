@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IPainting } from "./utils/types";
 import getAPainting from "./utils/getAPainting";
+import formatDate from "./utils/formatDate";
 
 const placeholderPaintings: [IPainting, IPainting] = [
   {
@@ -98,7 +99,7 @@ function App(): JSX.Element {
           </div>
           <div className="prompt-grid">
             <p className="left-prompt">
-              "{paintings[0].title}" was made in {paintings[0].objectEndDate}
+              "{paintings[0].title}" was made in {formatDate(paintings[0].objectEndDate)}
             </p>
             <p className="right-prompt">"{paintings[1].title}" is</p>
             <p className="right-prompt-btns">

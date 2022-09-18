@@ -5,7 +5,6 @@ async function getAPainting(artIds: number[]): Promise<IPainting> {
   let i = 0;
   while (i < 10) {
     const candidatePainting = await fetchFromApi(getRandomObjectId(artIds));
-    console.log(candidatePainting)
     if (candidatePainting.primaryImageSmall.length > 0) {
       return candidatePainting;
     }
@@ -23,7 +22,6 @@ async function fetchFromApi(id: number): Promise<IPainting> {
     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
   );
   const resJson: IPainting = await response.json();
-  console.log(resJson);
   return resJson;
 }
 
