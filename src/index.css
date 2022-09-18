@@ -82,7 +82,7 @@ footer {
 .btn {
   background-color: white;
   border: 1px solid black;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
   color: rgba(0, 0, 0, 0.85);
@@ -90,13 +90,13 @@ footer {
   padding: 2vh;
 }
 
-.btn:hover{
+.btn:hover {
   box-shadow: rgba(0, 0, 0, 0.75) 0 4px 12px;
   transform: translateY(-1px);
 }
 
 .btn:active {
-  background-color: #F0F0F1;
+  background-color: #f0f0f1;
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   color: rgba(0, 0, 0, 0.65);

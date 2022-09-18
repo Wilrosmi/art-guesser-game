@@ -13,8 +13,8 @@ async function getAPainting(artIds: number[]): Promise<IPainting> {
   return {
     title: "error: could not get object from API",
     primaryImageSmall: "",
-    objectEndDate: 0
-  }
+    objectEndDate: 0,
+  };
 }
 
 async function fetchFromApi(id: number): Promise<IPainting> {
